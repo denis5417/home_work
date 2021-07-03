@@ -10,18 +10,16 @@ import (
 var splitWordsRegexp = regexp.MustCompile(`\s-\s|[!"#$%&'()*+,\\./:;<=>?@[\]^_\x60{|}~\s]+`)
 
 func Top10(text string) []string {
-	if text == "" {
-		return make([]string, 0)
-	}
-
 	wordFrequency := make(map[string]int)
 
 	text = strings.ToLower(text)
 	for _, word := range splitWordsRegexp.Split(text, -1) {
-		wordFrequency[word]++
+		if word != "" {
+			wordFrequency[word]++
+		}
 	}
 
-	words := make([]string, len(wordFrequency))
+	words := make([]string, 0, len(wordFrequency))
 	for word := range wordFrequency {
 		words = append(words, word)
 	}
